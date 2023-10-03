@@ -3,40 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <title>Click and Drag</title>
-  <link rel="stylesheet" href="style.css">
+ 
 </head>
 <body>
-  <div class="items" id="parent">
-    <div class="item item1">01</div>
-    <div class="item item2">02</div>
-    <div class="item item3">03</div>
-    <div class="item item4">04</div>
-    <div class="item item5">05</div>
-    <div class="item item6">06</div>
-    <div class="item item7">07</div>
-    <div class="item item8">08</div>
-    <div class="item item9">09</div>
-    <div class="item item10">10</div>
-    <div class="item item11">11</div>
-    <div class="item item12">12</div>
-    <div class="item item13">13</div>
-    <div class="item item14">14</div>
-    <div class="item item15">15</div>
-    <div class="item item16">16</div>
-    <div class="item item17">17</div>
-    <div class="item item18">18</div>
-    <div class="item item19">19</div>
-    <div class="item item20">20</div>
-    <div class="item item21">21</div>
-    <div class="item item22">22</div>
-    <div class="item item23">23</div>
-    <div class="item item24">24</div>
-    <div class="item item25">25</div>
+  <div class="items">
+    <div class="item item1" draggable="true" ondragstart="dragStart(event)">01</div>
+    <div class="item item2" draggable="true" ondragstart="dragStart(event)">02</div>
+    <div class="item item3" draggable="true" ondragstart="dragStart(event)">03</div>
+    <div class="item item4" draggable="true" ondragstart="dragStart(event)">04</div>
+    <div class="item item5" draggable="true" ondragstart="dragStart(event)">05</div>
+    <div class="item item6" draggable="true" ondragstart="dragStart(event)">06</div>
+    <div class="item item7" draggable="true" ondragstart="dragStart(event)">07</div>
+    <div class="item item8" draggable="true" ondragstart="dragStart(event)">08</div>
+    <div class="item item9" draggable="true" ondragstart="dragStart(event)">09</div>
+    <div class="item item10" draggable="true" ondragstart="dragStart(event)">10</div>
+    <div class="item item11" draggable="true" ondragstart="dragStart(event)">11</div>
+    <div class="item item12" draggable="true" ondragstart="dragStart(event)">12</div>
+    <div class="item item13" draggable="true" ondragstart="dragStart(event)">13</div>
+    <div class="item item14" draggable="true" ondragstart="dragStart(event)">14</div>
+    <div class="item item15" draggable="true" ondragstart="dragStart(event)">15</div>
+    <div class="item item16" draggable="true" ondragstart="dragStart(event)">16</div>
+    <div class="item item17" draggable="true" ondragstart="dragStart(event)">17</div>
+    <div class="item item18" draggable="true" ondragstart="dragStart(event)">18</div>
+    <div class="item item19" draggable="true" ondragstart="dragStart(event)">19</div>
+    <div class="item item20" draggable="true" ondragstart="dragStart(event)">20</div>
+    <div class="item item21" draggable="true" ondragstart="dragStart(event)">21</div>
+    <div class="item item22" draggable="true" ondragstart="dragStart(event)">22</div>
+    <div class="item item23" draggable="true" ondragstart="dragStart(event)">23</div>
+    <div class="item item24" draggable="true" ondragstart="dragStart(event)">24</div>
+    <div class="item item25" draggable="true" ondragstart="dragStart(event)">25</div>
   </div>
 
 <script>
-//Your code goes here 
+  let activeElement = null;
+
+  function dragStart(event) {
+    activeElement = event.target;
+    event.dataTransfer.setData("text/plain", null);
+  }
+
+  document.addEventListener("dragover", function (event) {
+    event.preventDefault();
+  });
+
+  document.addEventListener("drop", function (event) {
+    event.preventDefault();
+    if (activeElement) {
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
+
+      activeElement.style.position = "absolute";
+      activeElement.style.left = mouseX - activeElement.clientWidth / 2 + "px";
+      activeElement.style.top = mouseY - activeElement.clientHeight / 2 + "px";
+
+      activeElement = null;
+    }
+  });
 </script>
 
-  </body>
+</body>
 </html>
