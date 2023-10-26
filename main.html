@@ -6,7 +6,7 @@
  
 </head>
 <body>
-  <div class="items" ondragover="allowDrop(event)" ondrop="drop(event)">
+  <div class="items">
     <div class="item item1" draggable="true" ondragstart="dragStart(event)">01</div>
     <div class="item item2" draggable="true" ondragstart="dragStart(event)">02</div>
     <div class="item item3" draggable="true" ondragstart="dragStart(event)">03</div>
@@ -35,31 +35,31 @@
   </div>
 
 <script>
-	let draggedItem = null;
+ let draggedItem = null;
 
   function dragStart(event) {
     draggedItem = event.target;
-    event.dataTransfer.setData("text/plain", ""); // required for Firefox
+    event.dataTransfer.setData('text/plain', ''); // required for Firefox
   }
 
-  function allowDrop(event) {
+  document.addEventListener('dragover', function(event) {
     event.preventDefault();
-  }
+  });
 
-  function drop(event) {
+  document.addEventListener('drop', function(event) {
     event.preventDefault();
     const target = event.target;
 
     // Check if the drop target is a valid item
-    if (target.classList.contains("item")) {
+    if (target.classList.contains('item')) {
       // Swap the positions of the dragged item and the drop target
-      const temp = { ...draggedItem.style };
-      Object.assign(draggedItem.style, target.style);
-      Object.assign(target.style, temp);
+      const tempText = draggedItem.textContent;
+      draggedItem.textContent = target.textContent;
+      target.textContent = tempText;
     }
 
     draggedItem = null;
-  }
+  });
 </script>
 
 </body>
