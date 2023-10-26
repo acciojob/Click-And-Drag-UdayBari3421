@@ -6,7 +6,7 @@
  
 </head>
 <body>
-  <div class="items">
+  <div class="items" ondragover="allowDrop(event)" ondrop="drop(event)">
     <div class="item item1" draggable="true" ondragstart="dragStart(event)">01</div>
     <div class="item item2" draggable="true" ondragstart="dragStart(event)">02</div>
     <div class="item item3" draggable="true" ondragstart="dragStart(event)">03</div>
@@ -35,30 +35,31 @@
   </div>
 
 <script>
-  let activeElement = null;
+	let draggedItem = null;
 
   function dragStart(event) {
-    activeElement = event.target;
-    event.dataTransfer.setData("text/plain", null);
+    draggedItem = event.target;
+    event.dataTransfer.setData("text/plain", ""); // required for Firefox
   }
 
-  document.addEventListener("dragover", function (event) {
+  function allowDrop(event) {
     event.preventDefault();
-  });
+  }
 
-  document.addEventListener("drop", function (event) {
+  function drop(event) {
     event.preventDefault();
-    if (activeElement) {
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
+    const target = event.target;
 
-      activeElement.style.position = "absolute";
-      activeElement.style.left = mouseX - activeElement.clientWidth / 2 + "px";
-      activeElement.style.top = mouseY - activeElement.clientHeight / 2 + "px";
-
-      activeElement = null;
+    // Check if the drop target is a valid item
+    if (target.classList.contains("item")) {
+      // Swap the positions of the dragged item and the drop target
+      const temp = { ...draggedItem.style };
+      Object.assign(draggedItem.style, target.style);
+      Object.assign(target.style, temp);
     }
-  });
+
+    draggedItem = null;
+  }
 </script>
 
 </body>
