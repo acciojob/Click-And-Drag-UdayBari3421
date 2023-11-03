@@ -56,6 +56,10 @@
       const tempText = draggedItem.textContent;
       draggedItem.textContent = target.textContent;
       target.textContent = tempText;
+
+		const temp = draggedItem.style.backgroundColor;
+		draggedItem.style.backgroundColor = target.style.backgroundColor;
+		target.style.backgroundColor = temp.style.backgroundColor;
     }
 
     draggedItem = null;
