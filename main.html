@@ -35,35 +35,73 @@
   </div>
 
 <script>
- let draggedItem = null;
-
-  function dragStart(event) {
-    draggedItem = event.target;
-    event.dataTransfer.setData('text/plain', ''); // required for Firefox
-  }
-
-  document.addEventListener('dragover', function(event) {
-    event.preventDefault();
-  });
-
-  document.addEventListener('drop', function(event) {
-    event.preventDefault();
-    const target = event.target;
-
-    // Check if the drop target is a valid item
-    if (target.classList.contains('item')) {
-      // Swap the positions of the dragged item and the drop target
-      const tempText = draggedItem.textContent;
-      draggedItem.textContent = target.textContent;
-      target.textContent = tempText;
-
-		const temp = draggedItem.style.backgroundColor;
-		draggedItem.style.backgroundColor = target.style.backgroundColor;
-		target.style.backgroundColor = temp.style.backgroundColor;
+ const items = document.querySelector('.items');
+let coords = {
+    left: 0,
+    x: 0
+}
+ 
+function clickItems() {
+    items.classList.add('active');
+    coords = {
+        left: items.scrollLeft,
+        x: event.clientX
     }
+ 
+    items.addEventListener('mousemove', dragItems);
+    items.addEventListener('mouseup', leaveItems);
+}
+ 
+function dragItems() {
+    const dx = coords.x - event.clientX;
+    items.scrollLeft = coords.left + dx;
+}
+    
+function leaveItems() {
+    items.classList.remove('active');
+    coords.left = items.scrollLeft;
+ 
+    items.removeEventListener('mousemove', dragItems);
+    items.removeEventListener('mouseup', leaveItems);
+}
+ 
+items.addEventListener('mousedown', clickItems);
+const slider = document.querySelector('.items');
+let isDown = false;
+let startX;
+let scrollLeft;
+ 
+slider.addEventListener('mousedown', () => {
+    isDown = true;
+});
+slider.addEventListener('mouseleave', () => {
+    isDown = false;
+});
+slider.addEventListener('mouseup', () => {
+    isDown = false;
+});
+slider.addEventListener('mousemove', () => {
+    if (!isDown) return; // stop the fn from running
+// drag slider
+});
+slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    slider.classList.add('active');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+});
+slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return; // stop the fn from running
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2;
+    slider.scrollLeft = scrollLeft - walk;
+});
+slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.classList.remove('active');
+});
 
-    draggedItem = null;
-  });
 </script>
 
 </body>
