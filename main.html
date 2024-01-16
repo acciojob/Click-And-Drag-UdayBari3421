@@ -35,41 +35,7 @@
   </div>
 
 <script>
-  let isDragging = false;
-  let startPosition = 0;
-  let currentTranslate = 0;
-
-  const items = document.querySelector('.items');
-
-  items.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    startPosition = e.clientX - items.offsetLeft;
-    items.style.cursor = 'grabbing';
-  });
-
-  items.addEventListener('mouseup', () => {
-    isDragging = false;
-    items.style.cursor = 'grab';
-  });
-
-  items.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-
-    const currentPosition = e.clientX - items.offsetLeft;
-    const distance = currentPosition - startPosition;
-    currentTranslate += distance;
-
-    items.style.transform = `translateX(${currentTranslate}px)`;
-    startPosition = currentPosition;
-  });
-
-  items.addEventListener('mouseleave', () => {
-    isDragging = false;
-    items.style.cursor = 'grab';
-  });
-
-  // Additional code to expose scrollLeft for testing
-  items.getScrollLeft = () => items.scrollLeft;
+//Your code goes here 
 </script>
 
   </body>
