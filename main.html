@@ -47,12 +47,14 @@
         itemsContainer.classList.add('active');
     });
 
-    itemsContainer.addEventListener('mouseup', () => {
-        isDragging = false;
-        itemsContainer.classList.remove('active');
+    document.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            itemsContainer.classList.remove('active');
+        }
     });
 
-    itemsContainer.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
         e.preventDefault();
         const x = e.pageX - itemsContainer.offsetLeft;
